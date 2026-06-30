@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purpose — Lantana Consulting Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --base:#0a0a0f;
+  --surface:#111118;
+  --surface2:#16161f;
+  --border:rgba(255,255,255,0.08);
+  --divider:rgba(255,255,255,0.12);
+  --teal:#2a879e;
+  --teal-light:#4fc3f7;
+  --text-primary:#f0f0f4;
+  --text-secondary:rgba(240,240,244,0.62);
+  --text-muted:rgba(240,240,244,0.38);
+  --font:'DM Sans',sans-serif;
+  --inner-max:1100px;
+  --radius:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--base);color:var(--text-primary);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,10,15,0.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo-placeholder{display:inline-flex;align-items:center;justify-content:center;width:140px;height:36px;border:1px solid rgba(255,255,255,0.18);border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.08em;color:var(--text-muted);text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{font-size:14px;font-weight:400;color:var(--text-secondary);transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text-primary);}
+.nav-links a.active{font-weight:500;}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--text-secondary);}
+.nav-mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(10,10,15,0.97);flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.nav-mobile-menu a{font-size:22px;font-weight:400;color:var(--text-secondary);}
+.nav-mobile-menu a.active{color:var(--text-primary);}
+.nav-mobile-menu.open{display:flex;}
+@media(max-width:860px){.nav-links{display:none;}.nav-hamburger{display:flex;}nav{padding:18px 24px;}}
+.reveal{opacity:1;}
+.reveal.visible{opacity:1;}
+section{padding:100px 48px;}
+.section-inner{max-width:var(--inner-max);margin:0 auto;}
+.section-divider{border:none;border-top:1px solid var(--divider);margin:0;}
+@media(max-width:768px){section{padding:72px 24px;}}
+.hero{position:relative;min-height:520px;display:flex;align-items:center;padding:140px 48px 100px;overflow:hidden;background:var(--base);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,15,0) 60%,rgba(10,10,15,1) 100%);pointer-events:none;}
+.hero-content{position:relative;z-index:2;max-width:var(--inner-max);margin:0 auto;width:100%;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.hero-eyebrow-line{display:block;width:32px;height:1px;background:var(--teal);}
+.hero-eyebrow-text{font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal-light);}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;color:var(--text-primary);max-width:720px;margin-bottom:20px;}
+.hero h1 em{font-style:normal;color:var(--teal-light);}
+.hero-sub{font-size:1.1rem;font-weight:300;color:var(--text-secondary);max-width:560px;line-height:1.65;}
+@media(max-width:768px){.hero{padding:120px 24px 72px;}.hero h1{font-size:2rem;}}
+.esop-section{background:var(--base);}
+.section-label{font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-light);margin-bottom:12px;}
+.section-headline{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:40px;line-height:1.15;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.two-col-statement{font-size:clamp(1.5rem,2.8vw,2.1rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--teal-light);}
+.two-col-body p{font-size:1rem;font-weight:300;color:var(--text-secondary);line-height:1.75;margin-bottom:20px;}
+.two-col-body p:last-child{margin-bottom:0;}
+.pull-quote{text-align:center;padding:56px 48px;max-width:760px;margin:64px auto 0;}
+.pull-quote blockquote{font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:400;font-style:italic;color:var(--text-primary);line-height:1.45;letter-spacing:-0.01em;}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;gap:36px;}.pull-quote{padding:40px 0;}}
+.bcorp-section{background:var(--surface);}
+.bcorp-two-col{display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start;}
+.bcorp-logo-placeholder{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1/1;max-width:260px;margin:0 auto;border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius);background:rgba(255,255,255,0.03);font-size:13px;font-weight:500;letter-spacing:0.06em;color:var(--text-muted);text-align:center;}
+@media(max-width:768px){.bcorp-two-col{grid-template-columns:1fr;gap:36px;}.bcorp-logo-placeholder{max-width:180px;}}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:64px 48px 40px;}
+.footer-inner{max-width:var(--inner-max);margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-logo-placeholder{display:inline-flex;align-items:center;justify-content:center;width:120px;height:30px;border:1px solid rgba(255,255,255,0.14);border-radius:3px;font-size:10px;font-weight:500;letter-spacing:0.08em;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px;}
+.footer-tagline{font-size:13px;color:var(--text-muted);line-height:1.6;max-width:220px;}
+.footer-col-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;}
+.footer-links li{margin-bottom:10px;}
+.footer-links a{font-size:13px;color:var(--text-secondary);transition:color 0.2s;}
+.footer-links a:hover{color:var(--text-primary);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);}
+.footer-copy{font-size:12px;color:var(--text-muted);}
+.footer-creds{display:flex;gap:8px;}
+.footer-cred-badge{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,0.14);border-radius:20px;color:var(--text-muted);}
+@media(max-width:768px){footer{padding:48px 24px 32px;}.footer-top{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo-placeholder">[Lantana Logo]</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="capabilities.html">Capabilities</a></li>
+    <li><a href="solutions.html">What We Do</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="clients.html">Clients &amp; Partners</a></li>
+    <li><a href="software.html">Software</a></li>
+    <li><a href="purpose.html" class="active">Purpose</a></li>
+    <li><a href="careers.html">Careers</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="about.html">About</a>
+  <a href="capabilities.html">Capabilities</a>
+  <a href="solutions.html">What We Do</a>
+  <a href="team.html">Team</a>
+  <a href="clients.html">Clients &amp; Partners</a>
+  <a href="software.html">Software</a>
+  <a href="purpose.html" class="active">Purpose</a>
+  <a href="careers.html">Careers</a>
+</div>
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      <span class="hero-eyebrow-text">Our Purpose</span>
+    </div>
+    <h1>Owned by the People <em>Who Do the Work.</em></h1>
+    <p class="hero-sub">Employee-owned. B-Corp certified. Built to last.</p>
+  </div>
+</section>
+<hr class="section-divider">
+<section class="esop-section">
+  <div class="section-inner">
+    <p class="section-label">Employee Ownership</p>
+    <h2 class="section-headline">100% Employee-Owned</h2>
+    <div class="two-col">
+      <div class="two-col-statement">When you work with Lantana, you work with owners.</div>
+      <div class="two-col-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt.</p>
+      </div>
+    </div>
+    <div class="pull-quote">
+      <blockquote>"Ownership isn't a perk. It's the point."</blockquote>
+    </div>
+  </div>
+</section>
+<hr class="section-divider">
+<section class="bcorp-section">
+  <div class="section-inner">
+    <p class="section-label">B-Corp Certification</p>
+    <h2 class="section-headline">Certified B Corporation</h2>
+    <div class="bcorp-two-col">
+      <div class="bcorp-logo-placeholder">[B-Corp Logo]</div>
+      <div class="two-col-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam voluptatem.</p>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore.</p>
+      </div>
+    </div>
+    <div class="pull-quote">
+      <blockquote>"We measure success by more than the bottom line."</blockquote>
+    </div>
+  </div>
+</section>
+<hr class="section-divider">
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-placeholder">[Lantana Logo]</div>
+        <p class="footer-tagline">Purpose-driven consulting, employee-owned and B-Corp certified.</p>
+      </div>
+      <div>
+        <p class="footer-col-label">Company</p>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="capabilities.html">Capabilities</a></li>
+          <li><a href="solutions.html">What We Do</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="purpose.html">Purpose</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-label">Work</p>
+        <ul class="footer-links">
+          <li><a href="clients.html">Clients &amp; Partners</a></li>
+          <li><a href="software.html">Software</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024 Lantana Consulting Group. All rights reserved.</span>
+      <div class="footer-creds">
+        <span class="footer-cred-badge">ESOP</span>
+        <span class="footer-cred-badge">B Corp</span>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+</script>
+</body>
+</html>
