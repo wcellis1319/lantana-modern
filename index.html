@@ -1,520 +1,602 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lantana Consulting Group — Federal Health Informatics</title>
+<title>Lantana Consulting Group</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg-dark: #0a0a0f;
-    --bg-mid: #0f0f18;
-    --bg-card: #13131e;
-    --accent: #4a7fa5;
-    --accent-warm: #6b9ab8;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255,255,255,0.70);
-    --text-muted: rgba(255,255,255,0.38);
-    --border: rgba(255,255,255,0.10);
-    --border-card: rgba(255,255,255,0.08);
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 48px;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.18);
-  }
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 160px;
-    height: 44px;
-    border: 1.5px solid rgba(255,255,255,0.55);
-    border-radius: 4px;
-    color: rgba(255,255,255,0.80);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.1s;
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    list-style: none;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.2s;
-  }
-  .nav-links a {
-    color: rgba(255,255,255,0.65);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover, .nav-links a.active { color: #fff; }
-  .nav-links a.active { font-weight: 500; }
-  .nav-hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.2s;
-  }
-  .nav-hamburger span {
-    display: block;
-    width: 22px;
-    height: 1.5px;
-    background: rgba(255,255,255,0.75);
-    transition: transform 0.3s, opacity 0.3s;
-  }
-  .nav-mobile-menu {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    background: rgba(10,10,15,0.97);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-  .nav-mobile-menu.open { display: flex; }
-  .nav-mobile-menu a {
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    padding-bottom: 12px;
-    width: 200px;
-    text-align: center;
-    transition: color 0.2s;
-  }
-  .nav-mobile-menu a:hover { color: #fff; }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    background: var(--bg-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  #railsCanvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  .hero-bottom-fade {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(to bottom, transparent 0%, rgba(15,15,24,0.55) 50%, #0f0f18 100%);
-    z-index: 5;
-    pointer-events: none;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    max-width: 780px;
-    padding: 0 32px;
-  }
-  .hero-headline {
-    font-size: clamp(36px, 5.5vw, 68px);
-    font-weight: 700;
-    line-height: 1.10;
-    letter-spacing: -0.02em;
-    color: #fff;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-    animation-delay: 0.5s;
-  }
-  .hero-sub {
-    font-size: clamp(15px, 1.6vw, 18px);
-    font-weight: 300;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.70);
-    margin-bottom: 44px;
-    letter-spacing: 0.01em;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-    animation-delay: 0.8s;
-  }
-  .hero-cta {
-    display: inline-block;
-    padding: 14px 36px;
-    border: 1.5px solid rgba(255,255,255,0.60);
-    border-radius: 3px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: background 0.25s, border-color 0.25s;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-    animation-delay: 1.1s;
-  }
-  .hero-cta:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.90);
-  }
-  .scroll-hint {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 1.5s;
-  }
-  .scroll-hint span {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.30);
-  }
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.30), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 0.7; transform: scaleY(1.15); }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  /* ── SECTIONS ── */
-  section { padding: 100px 48px; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent-warm);
-    margin-bottom: 20px;
-    display: block;
-  }
-  .section-headline {
-    font-size: clamp(28px, 3.5vw, 44px);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-    color: #fff;
-    margin-bottom: 56px;
-  }
-  #work { background: var(--bg-mid); }
-  .cards-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 8px;
-    padding: 36px 28px;
-    transition: border-color 0.25s, transform 0.25s;
-  }
-  .stat-card:hover {
-    border-color: rgba(74,127,165,0.40);
-    transform: translateY(-3px);
-  }
-  .stat-card .stat-number {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--accent-warm);
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-    line-height: 1;
-  }
-  .stat-card .stat-label {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-  .section-divider {
-    margin: 0;
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.12);
-    background: #0c0c15;
-    padding: 0;
-  }
-  #about { background: #0c0c15; }
-  .about-body {
-    max-width: 640px;
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.75;
-    color: var(--text-secondary);
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.65s ease, transform 0.65s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-  }
-  @media (max-width: 768px) {
-    section { padding: 72px 24px; }
-    .cards-row { grid-template-columns: 1fr; gap: 16px; }
-    .hero-content { padding: 0 24px; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;background:#fff;color:#0D1B2A;-webkit-font-smoothing:antialiased}
+:root{
+  --navy:#0D1B2A;
+  --teal:#2E6E8E;
+  --white:#FFFFFF;
+  --lgray:#F4F6F8;
+  --mgray:#8A9BB0;
+  --border:#E8EDF2;
+  --text-body:#4A5568;
+  --text-muted:#6B7A8D;
+}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:transparent;transition:background 0.4s ease,backdrop-filter 0.4s ease;}
+nav.scrolled{background:rgba(13,27,42,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.nav-logo img{height:38px;display:block}
+.nav-right{display:flex;align-items:center;gap:0;flex-wrap:nowrap}
+.nav-links{display:flex;align-items:center;gap:32px;flex-wrap:nowrap}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none;position:relative;white-space:nowrap;transition:color 0.25s ease;}
+.nav-links a::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease;}
+.nav-links a:hover,.nav-links a.active{color:rgba(255,255,255,1)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-sep{width:1px;height:20px;background:rgba(255,255,255,0.2);margin:0 24px}
+.nav-linkedin{color:rgba(255,255,255,0.65);transition:color 0.25s ease;display:flex;align-items:center;}
+.nav-linkedin:hover{color:rgba(255,255,255,1)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all 0.3s ease}
+.nav-overlay{display:none;position:fixed;inset:0;background:var(--navy);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.nav-overlay.open{display:flex}
+.nav-overlay a{font-size:24px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.8);text-decoration:none;}
+.nav-overlay a:hover{color:#fff}
+.nav-overlay-close{position:absolute;top:28px;right:32px;font-size:28px;color:#fff;cursor:pointer;background:none;border:none;line-height:1;}
+#hero{position:relative;height:88vh;min-height:600px;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,27,42,0.1) 0%,rgba(13,27,42,0.3) 40%,rgba(13,27,42,0.85) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 80px 40px;max-width:900px;}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;}
+.hero-headline{font-size:clamp(44px,6vw,80px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.0;max-width:720px;}
+.hero-headline .word{display:inline-block;opacity:0;transform:translateY(24px);transition:opacity 0.5s ease,transform 0.5s ease;margin-right:0.22em;}
+.hero-headline .word.visible{opacity:1;transform:translateY(0)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 0.6s ease 2s forwards;}
+.hero-scroll svg{animation:bounce 1.8s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@keyframes fadeIn{to{opacity:1}}
+#trust{background:#fff;padding:64px 0;border-top:1px solid #E2E8F0;}
+.trust-inner{max-width:1200px;margin:0 auto;padding:0 56px}
+.trust-agencies{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
+.trust-agency{font-size:13px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--mgray);padding:0 28px;border-right:1px solid #E2E8F0;}
+.trust-agency:last-child{border-right:none}
+.trust-badges{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap;}
+.trust-badge{background:var(--navy);color:#fff;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:8px 20px;border-radius:100px;}
+.section-label{font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:24px;}
+.section-rule{width:60px;height:1px;background:var(--teal);margin-bottom:20px;}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+#about{background:var(--lgray);padding:140px 0}
+.about-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:40% 55%;gap:5%;align-items:start;}
+.about-stats{display:flex;flex-direction:column;gap:48px}
+.stat-block{padding-left:40px;border-left:3px solid var(--teal)}
+.stat-num{font-size:88px;font-weight:800;color:var(--navy);line-height:0.9;letter-spacing:-0.04em}
+.stat-label{font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--teal);margin-top:8px}
+.about-heading{font-size:clamp(28px,3vw,42px);font-weight:700;color:var(--navy);letter-spacing:-0.02em;line-height:1.15;margin-bottom:32px}
+.about-body p{font-size:17px;font-weight:400;color:var(--text-body);line-height:1.75;margin-bottom:20px}
+.about-body p:last-child{margin-bottom:0}
+#services{background:#fff;padding:140px 0}
+.services-inner{max-width:1200px;margin:0 auto;padding:0 56px}
+.services-header{margin-bottom:64px}
+.services-heading{font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;margin-top:16px}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.services-grid .card-bottom{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:calc(66.66% + 12px)}
+.svc-card{background:#fff;border:1px solid var(--border);padding:40px 36px;border-radius:0;position:relative;overflow:hidden;transition:border-color 0.3s ease,transform 0.3s ease,box-shadow 0.3s ease;}
+.svc-card:hover{border-color:var(--teal);transform:translateY(-6px);box-shadow:0 20px 40px rgba(13,27,42,0.08)}
+.svc-num{font-size:13px;font-weight:800;letter-spacing:0.1em;color:var(--teal)}
+.svc-title{font-size:20px;font-weight:700;color:var(--navy);margin:16px 0 12px}
+.svc-body{font-size:15px;font-weight:400;color:var(--text-muted);line-height:1.6}
+.svc-accent{position:absolute;bottom:24px;left:36px;width:40px;height:2px;background:var(--teal)}
+#nursing{background:var(--navy);padding:140px 0}
+.nursing-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:55% 40%;gap:5%;align-items:start}
+.nursing-heading{font-size:clamp(32px,4vw,56px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.05;margin-bottom:32px;margin-top:16px}
+.nursing-body p{font-size:17px;color:rgba(255,255,255,0.7);line-height:1.75;margin-bottom:20px}
+.nursing-quote{margin-top:40px;position:relative;padding-left:24px}
+.nursing-quote-mark{font-size:80px;font-weight:800;color:rgba(46,110,142,0.3);line-height:0.8;position:absolute;left:0;top:-8px}
+.nursing-quote-text{font-size:22px;font-style:italic;color:var(--teal);line-height:1.4;padding-left:32px}
+.nursing-cards{display:flex;flex-direction:column;gap:16px}
+.nursing-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:28px;border-radius:0}
+.nursing-card-label{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.nursing-card-value{font-size:24px;font-weight:700;color:#fff;line-height:1.2}
+#standards{background:var(--lgray);padding:140px 0;position:relative;overflow:hidden}
+.standards-inner{max-width:1200px;margin:0 auto;padding:0 56px;text-align:center;position:relative;z-index:2}
+.standards-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:280px;font-weight:800;color:rgba(13,27,42,0.04);white-space:nowrap;pointer-events:none;z-index:1;line-height:1;}
+.standards-heading{font-size:clamp(32px,4vw,56px);font-weight:800;color:var(--navy);letter-spacing:-0.03em;line-height:1.1;max-width:700px;margin:16px auto 40px}
+.standards-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:48px}
+.chip{background:var(--navy);color:#fff;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:0}
+.standards-body{max-width:640px;margin:0 auto}
+.standards-body p{font-size:17px;color:var(--text-body);line-height:1.75;margin-bottom:20px}
+#esop{background:#fff;padding:140px 0}
+.esop-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:55% 40%;gap:5%;align-items:start}
+.esop-heading{font-size:clamp(28px,3vw,44px);font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;margin-bottom:32px;margin-top:16px}
+.esop-body p{font-size:17px;color:var(--text-body);line-height:1.75;margin-bottom:20px}
+.esop-quote{margin-top:40px;padding:32px;background:var(--lgray);border-left:3px solid var(--teal)}
+.esop-quote-text{font-size:18px;font-style:italic;color:var(--navy);line-height:1.5;margin-bottom:16px}
+.esop-quote-attr{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal)}
+.esop-stats{display:flex;flex-direction:column;gap:32px}
+.esop-stat{padding-left:32px;border-left:2px solid var(--border)}
+.esop-stat-num{font-size:64px;font-weight:800;color:var(--navy);line-height:0.9;letter-spacing:-0.04em}
+.esop-stat-label{font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-top:8px}
+#bcorp{background:var(--navy);padding:140px 0}
+.bcorp-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.bcorp-heading{font-size:clamp(28px,3vw,44px);font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.1;margin-bottom:32px;margin-top:16px}
+.bcorp-body p{font-size:17px;color:rgba(255,255,255,0.7);line-height:1.75;margin-bottom:20px}
+.bcorp-score-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:48px;text-align:center}
+.bcorp-score-label{font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.bcorp-score-num{font-size:96px;font-weight:800;color:#fff;line-height:0.9;letter-spacing:-0.04em}
+.bcorp-score-rows{margin-top:32px;display:flex;flex-direction:column;gap:12px}
+.bcorp-score-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.bcorp-score-row-label{font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:0.06em}
+.bcorp-score-row-val{font-size:16px;font-weight:700;color:#fff}
+.bcorp-score-row.highlight .bcorp-score-row-val{color:var(--teal)}
+#team{background:var(--lgray);padding:140px 0}
+.team-inner{max-width:1200px;margin:0 auto;padding:0 56px}
+.team-heading{font-size:clamp(28px,3vw,44px);font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;margin-top:16px;margin-bottom:64px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.team-card{background:#fff;padding:28px 24px;position:relative;overflow:hidden;transition:transform 0.3s ease,box-shadow 0.3s ease;}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(13,27,42,0.1)}
+.team-avatar{width:56px;height:56px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:0.05em}
+.team-name{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.team-title{font-size:12px;color:var(--text-muted);line-height:1.4}
+.team-accent{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;}
+.team-card:hover .team-accent{transform:scaleX(1)}
+#tools{background:#fff;padding:140px 0}
+.tools-inner{max-width:1200px;margin:0 auto;padding:0 56px}
+.tools-heading{font-size:clamp(28px,3vw,44px);font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;margin-top:16px;margin-bottom:64px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.tool-card{background:var(--lgray);padding:56px 48px;position:relative;overflow:hidden}
+.tool-name{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.tool-tag{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:24px}
+.tool-body p{font-size:16px;color:var(--text-body);line-height:1.7;margin-bottom:16px}
+.tool-body p:last-child{margin-bottom:0}
+#linkedin{background:var(--navy);padding:80px 0}
+.linkedin-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.linkedin-heading{font-size:clamp(24px,3vw,36px);font-weight:700;color:#fff;letter-spacing:-0.02em}
+.linkedin-body{font-size:16px;color:rgba(255,255,255,0.6);margin-top:8px}
+.linkedin-btn{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:16px 32px;text-decoration:none;transition:background 0.25s ease,transform 0.25s ease;white-space:nowrap;}
+.linkedin-btn:hover{background:#245a74;transform:translateY(-2px)}
+#careers{background:var(--lgray);padding:140px 0}
+.careers-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:55% 40%;gap:5%;align-items:center}
+.careers-heading{font-size:clamp(28px,3vw,44px);font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;margin-top:16px;margin-bottom:32px}
+.careers-body p{font-size:17px;color:var(--text-body);line-height:1.75;margin-bottom:20px}
+.careers-cta{display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:18px 36px;text-decoration:none;transition:background 0.25s ease,transform 0.25s ease;}
+.careers-cta:hover{background:var(--teal);transform:translateY(-2px)}
+.careers-visual{display:flex;flex-direction:column;gap:16px}
+.careers-pill{background:#fff;border:1px solid var(--border);padding:20px 24px;font-size:14px;font-weight:500;color:var(--navy)}
+footer{background:var(--navy);padding:64px 0}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.footer-logo img{height:32px;display:block}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.4)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.25s ease;}
+.footer-links a:hover{color:rgba(255,255,255,0.8)}
+@media(max-width:1024px){
+  .about-inner,.nursing-inner,.esop-inner,.bcorp-inner,.careers-inner{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .services-grid .card-bottom{grid-column:auto;grid-template-columns:1fr 1fr;max-width:100%}
+  .team-grid{grid-template-columns:repeat(3,1fr)}
+  .tools-grid{grid-template-columns:1fr}
+  .linkedin-inner{flex-direction:column;text-align:center}
+}
+@media(max-width:768px){
+  nav{padding:0 24px}
+  .nav-links,.nav-sep,.nav-linkedin{display:none}
+  .nav-hamburger{display:flex}
+  .hero-content{padding:0 32px 32px}
+  .trust-inner,.about-inner,.services-inner,.nursing-inner,.standards-inner,.esop-inner,.bcorp-inner,.team-inner,.tools-inner,.linkedin-inner,.careers-inner,.footer-inner{padding:0 24px}
+  #about,#services,#nursing,#standards,#esop,#bcorp,#team,#tools,#careers{padding:80px 0}
+  .services-grid{grid-template-columns:1fr}
+  .services-grid .card-bottom{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .bcorp-inner{gap:40px}
+}
 </style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">[Lantana Logo]</a>
-  <ul class="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="capabilities.html">Capabilities</a></li>
-    <li><a href="solutions.html">Solutions</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="clients.html">Clients</a></li>
-    <li><a href="software.html">Software</a></li>
-    <li><a href="purpose.html">Purpose</a></li>
-    <li><a href="careers.html">Careers</a></li>
-  </ul>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="Lantana Consulting Group">
+  </div>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Work</a>
+      <a href="#standards">Standards</a>
+      <a href="#esop">ESOP</a>
+      <a href="#bcorp">B-Corp</a>
+      <a href="#team">Team</a>
+      <a href="#tools">Tools</a>
+      <a href="#careers">Careers</a>
+    </div>
+    <div class="nav-sep"></div>
+    <a href="https://www.linkedin.com/company/lantana-consulting-group" target="_blank" class="nav-linkedin" aria-label="LinkedIn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <div class="nav-hamburger" onclick="openMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </nav>
-
-<div class="nav-mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="capabilities.html">Capabilities</a>
-  <a href="solutions.html">Solutions</a>
-  <a href="team.html">Team</a>
-  <a href="clients.html">Clients</a>
-  <a href="software.html">Software</a>
-  <a href="purpose.html">Purpose</a>
-  <a href="careers.html">Careers</a>
+<div class="nav-overlay" id="nav-overlay">
+  <button class="nav-overlay-close" onclick="closeMenu()">&#x2715;</button>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Work</a>
+  <a href="#standards" onclick="closeMenu()">Standards</a>
+  <a href="#esop" onclick="closeMenu()">ESOP</a>
+  <a href="#bcorp" onclick="closeMenu()">B-Corp</a>
+  <a href="#team" onclick="closeMenu()">Team</a>
+  <a href="#tools" onclick="closeMenu()">Tools</a>
+  <a href="#careers" onclick="closeMenu()">Careers</a>
 </div>
 
-<section class="hero">
-  <canvas id="railsCanvas"></canvas>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1 class="hero-headline">Where Health Data Becomes Health Policy</h1>
-    <p class="hero-sub">Lantana Consulting Group — Federal health informatics, standards, and interoperability.</p>
-    <a href="about.html" class="hero-cta">Learn More</a>
+    <h1 class="hero-headline" id="hero-headline"></h1>
   </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+  <div class="hero-scroll">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
   </div>
-  <div class="hero-bottom-fade"></div>
 </section>
 
-<section id="work">
-  <div class="section-inner">
-    <span class="section-label reveal">Our Work</span>
-    <h2 class="section-headline reveal">Standards That Shape the Future of Care</h2>
-    <div class="cards-row">
-      <div class="stat-card reveal">
-        <div class="stat-number">20+ Years</div>
-        <div class="stat-label">Federal health informatics expertise</div>
+<!-- TRUST BAR -->
+<section id="trust">
+  <div class="trust-inner">
+    <div class="trust-agencies reveal">
+      <div class="trust-agency">CDC</div>
+      <div class="trust-agency">CMS</div>
+      <div class="trust-agency">ONC</div>
+      <div class="trust-agency">NIH</div>
+      <div class="trust-agency">HRSA</div>
+      <div class="trust-agency">NCI</div>
+    </div>
+    <div class="trust-badges reveal">
+      <span class="trust-badge">GSA MAS &middot; SIN 54151HEAL</span>
+      <span class="trust-badge">CMS MIDS IDIQ &middot; Prime Contractor</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-stats">
+      <div class="stat-block reveal">
+        <div class="stat-num" data-count="20" data-suffix="+">0</div>
+        <div class="stat-label">Years of Federal Service</div>
       </div>
-      <div class="stat-card reveal">
-        <div class="stat-number">FHIR &amp; HL7</div>
-        <div class="stat-label">Standards implementation at national scale</div>
+      <div class="stat-block reveal" style="transition-delay:0.1s">
+        <div class="stat-num" data-count="130" data-suffix="+">0</div>
+        <div class="stat-label">Employee Owners</div>
       </div>
-      <div class="stat-card reveal">
-        <div class="stat-number">CDC &amp; NHSN</div>
-        <div class="stat-label">Trusted by the agencies that protect public health</div>
+      <div class="stat-block reveal" style="transition-delay:0.2s">
+        <div class="stat-num" data-count="100" data-suffix="+">0</div>
+        <div class="stat-label">HL7 Guides Authored</div>
+      </div>
+    </div>
+    <div class="about-copy reveal">
+      <div class="section-rule"></div>
+      <div class="section-label">About</div>
+      <h2 class="about-heading">The Infrastructure Behind Federal Health Data.</h2>
+      <div class="about-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="section-divider">
-
-<section id="about">
-  <div class="section-inner">
-    <span class="section-label reveal">About</span>
-    <h2 class="section-headline reveal">A Small Firm. An Outsized Impact.</h2>
-    <p class="about-body reveal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header reveal">
+      <div class="section-label">What We Do</div>
+      <h2 class="services-heading">Five Pillars of Federal Health IT</h2>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-num">01</div>
+        <div class="svc-title">Interoperability Strategy &amp; Architecture</div>
+        <div class="svc-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</div>
+        <div class="svc-accent"></div>
+      </div>
+      <div class="svc-card reveal" style="transition-delay:0.1s">
+        <div class="svc-num">02</div>
+        <div class="svc-title">Standards Development &amp; Implementation</div>
+        <div class="svc-body">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</div>
+        <div class="svc-accent"></div>
+      </div>
+      <div class="svc-card reveal" style="transition-delay:0.2s">
+        <div class="svc-num">03</div>
+        <div class="svc-title">Federal Quality &amp; Public Health Reporting</div>
+        <div class="svc-body">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.</div>
+        <div class="svc-accent"></div>
+      </div>
+      <div class="card-bottom">
+        <div class="svc-card reveal">
+          <div class="svc-num">04</div>
+          <div class="svc-title">Application Development &amp; Open-Source Tools</div>
+          <div class="svc-body">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</div>
+          <div class="svc-accent"></div>
+        </div>
+        <div class="svc-card reveal" style="transition-delay:0.1s">
+          <div class="svc-num">05</div>
+          <div class="svc-title">Program &amp; Project Management</div>
+          <div class="svc-body">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</div>
+          <div class="svc-accent"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- NURSING -->
+<section id="nursing">
+  <div class="nursing-inner">
+    <div class="nursing-left">
+      <div class="section-rule" style="background:var(--teal)"></div>
+      <div class="section-label" style="color:var(--teal)">Nursing &amp; Long-Term Care</div>
+      <h2 class="nursing-heading">The First. The Standard. Still Running.</h2>
+      <div class="nursing-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
+      </div>
+      <div class="nursing-quote reveal">
+        <div class="nursing-quote-mark">&ldquo;</div>
+        <div class="nursing-quote-text">First CDA application for CDC/NHSN. Built in 2007.</div>
+      </div>
+    </div>
+    <div class="nursing-cards">
+      <div class="nursing-card reveal">
+        <div class="nursing-card-label">HAI Surveillance</div>
+        <div class="nursing-card-value">15+ Years of Continuous Delivery</div>
+      </div>
+      <div class="nursing-card reveal" style="transition-delay:0.1s">
+        <div class="nursing-card-label">NHSNLink Platform</div>
+        <div class="nursing-card-value">Open-Source NHSN Automated Reporting</div>
+      </div>
+      <div class="nursing-card reveal" style="transition-delay:0.2s">
+        <div class="nursing-card-label">MMWR Co-Authorship</div>
+        <div class="nursing-card-value">CDC-Published Nursing Home Research</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STANDARDS -->
+<section id="standards">
+  <div class="standards-watermark">100+</div>
+  <div class="standards-inner">
+    <div class="section-rule" style="margin:0 auto 20px"></div>
+    <div class="section-label">Standards Authority</div>
+    <h2 class="standards-heading">We Didn&rsquo;t Just Adopt the Standards. We Wrote Them.</h2>
+    <div class="standards-chips reveal">
+      <span class="chip">C-CDA</span>
+      <span class="chip">HQMF</span>
+      <span class="chip">QRDA</span>
+      <span class="chip">HAI Reports</span>
+      <span class="chip">FHIR</span>
+    </div>
+    <div class="standards-body reveal">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESOP -->
+<section id="esop">
+  <div class="esop-inner">
+    <div class="esop-left">
+      <div class="section-rule"></div>
+      <div class="section-label">Employee Ownership</div>
+      <h2 class="esop-heading">When Your Team Owns the Work, the Work Gets Done Right.</h2>
+      <div class="esop-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident.</p>
+      </div>
+      <div class="esop-quote reveal">
+        <div class="esop-quote-text">&ldquo;Scoring highest in the workers category reflects our strong commitment to our employees, having transitioned to a 100% employee-owned company in December 2022.&rdquo;</div>
+        <div class="esop-quote-attr">Eric Nystrom, CFO</div>
+      </div>
+    </div>
+    <div class="esop-stats">
+      <div class="esop-stat reveal">
+        <div class="esop-stat-num" data-count="100" data-suffix="%">0</div>
+        <div class="esop-stat-label">Employee-Owned</div>
+      </div>
+      <div class="esop-stat reveal" style="transition-delay:0.1s">
+        <div class="esop-stat-num" data-count="53" data-suffix="%">0</div>
+        <div class="esop-stat-label">Longer Median Tenure</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B-CORP -->
+<section id="bcorp">
+  <div class="bcorp-inner">
+    <div class="bcorp-left">
+      <div class="section-rule" style="background:var(--teal)"></div>
+      <div class="section-label" style="color:var(--teal)">Certified B Corporation</div>
+      <h2 class="bcorp-heading">B Corp Score</h2>
+      <div class="bcorp-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+      </div>
+    </div>
+    <div class="bcorp-score-card reveal">
+      <div class="bcorp-score-label">Certified B Corporation</div>
+      <div class="bcorp-score-num" data-count="126" data-suffix=".2">0</div>
+      <div class="bcorp-score-rows">
+        <div class="bcorp-score-row">
+          <span class="bcorp-score-row-label">Industry Median</span>
+          <span class="bcorp-score-row-val">50.9</span>
+        </div>
+        <div class="bcorp-score-row">
+          <span class="bcorp-score-row-label">Certification Threshold</span>
+          <span class="bcorp-score-row-val">80</span>
+        </div>
+        <div class="bcorp-score-row highlight">
+          <span class="bcorp-score-row-label">Lantana</span>
+          <span class="bcorp-score-row-val">126.2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="team-inner">
+    <div class="section-rule"></div>
+    <div class="section-label">Leadership</div>
+    <h2 class="team-heading">Built by Experts. Owned by the People Who Do the Work.</h2>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="team-avatar">CP</div><div class="team-name">Courtney Panaia-Rodi</div><div class="team-title">PMP, CEO, Board Chair</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">LA</div><div class="team-name">Liora Alschuler</div><div class="team-title">Founder &amp; Board Member</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">WW</div><div class="team-name">Wendy Wise</div><div class="team-title">Chief Operating Officer</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">EN</div><div class="team-name">Eric Nystrom</div><div class="team-title">MBA, VP &amp; CFO, Board Treasurer</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">NS</div><div class="team-name">Nadine Shehab</div><div class="team-title">PharmD, MPH, Chief Scientist</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">JY</div><div class="team-name">James Younts</div><div class="team-title">MS, Chief Growth Officer</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">EC</div><div class="team-name">Emilie Cousineau</div><div class="team-title">MS, PMP, Chief of Staff</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">EG</div><div class="team-name">Emily Gluvna</div><div class="team-title">MBA, Chief Human Resources Officer</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">JB</div><div class="team-name">Jeff Brown</div><div class="team-title">HL7CE, Principal Healthcare Standards Advisor</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">AF</div><div class="team-name">Angela Flanagan</div><div class="team-title">MSN, RN, CPHIMS, FHIMSS, Principal Clinical Analyst</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">ZG</div><div class="team-name">Zabrina Gonzaga</div><div class="team-title">MSN, RN, CPNP-PC, Sr. Principal Clinical Informatics</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">TF</div><div class="team-name">Tamara Funk</div><div class="team-title">MPH, Principal Program Advisor</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">RG</div><div class="team-name">Rick Geimer</div><div class="team-title">Senior Principal Innovation Engineer</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">SM</div><div class="team-name">Sean McIlvenna</div><div class="team-title">Principal Solution Architect</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">MS</div><div class="team-name">Mathew Sapiano</div><div class="team-title">PhD, Director of Data Science</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">SK</div><div class="team-name">Shilpa Kandi</div><div class="team-title">Software Development Manager</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">LP</div><div class="team-name">Lynnelle Perrine</div><div class="team-title">MSN, RN, Quality Measurement Manager</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">KC</div><div class="team-name">Kristie Cobb</div><div class="team-title">Agile Program Manager</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">SA</div><div class="team-name">Siranush Abajyan</div><div class="team-title">Quality Assurance Manager</div><div class="team-accent"></div></div>
+      <div class="team-card reveal"><div class="team-avatar">ER</div><div class="team-name">Eric Rux</div><div class="team-title">Associate Director</div><div class="team-accent"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="tools-inner">
+    <div class="section-rule"></div>
+    <div class="section-label">Open-Source Tools</div>
+    <h2 class="tools-heading">Built for the Mission. Open to the Field.</h2>
+    <div class="tools-grid">
+      <div class="tool-card reveal">
+        <div class="tool-name">Trifolia Workbench</div>
+        <div class="tool-tag">1,100+ Users</div>
+        <div class="tool-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non.</p>
+        </div>
+      </div>
+      <div class="tool-card reveal" style="transition-delay:0.1s">
+        <div class="tool-name">FHIR / CDA Validator</div>
+        <div class="tool-tag">Free &amp; Open</div>
+        <div class="tool-body">
+          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LINKEDIN -->
+<section id="linkedin">
+  <div class="linkedin-inner">
+    <div>
+      <h2 class="linkedin-heading">Stay Current.</h2>
+      <div class="linkedin-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+    </div>
+    <a href="https://www.linkedin.com/company/lantana-consulting-group" target="_blank" class="linkedin-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Follow on LinkedIn
+    </a>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section id="careers">
+  <div class="careers-inner">
+    <div class="careers-left">
+      <div class="section-rule"></div>
+      <div class="section-label">Join the Team</div>
+      <h2 class="careers-heading">Remote-First. Mission-Driven. Employee-Owned.</h2>
+      <div class="careers-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <a href="https://www.lantanagroup.com/careers" class="careers-cta">View Open Positions</a>
+    </div>
+    <div class="careers-visual">
+      <div class="careers-pill">Remote-First Culture</div>
+      <div class="careers-pill">Employee Ownership</div>
+      <div class="careers-pill">Mission-Driven Work</div>
+      <div class="careers-pill">Flexible Schedule</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Lantana Consulting Group">
+    </div>
+    <div class="footer-copy">&copy; 2024 Lantana Consulting Group, Inc. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#careers">Careers</a>
+      <a href="https://www.linkedin.com/company/lantana-consulting-group" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-(function() {
-  /* ── Mobile nav toggle ── */
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => { mobileMenu.classList.remove('open'); });
-  });
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+function openMenu() { document.getElementById('nav-overlay').classList.add('open'); }
+function closeMenu() { document.getElementById('nav-overlay').classList.remove('open'); }
 
-  /* ── Hero rails canvas animation ── */
-  const canvas = document.getElementById('railsCanvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, rails = [], dots = [];
-  const LAYERS = [
-    { count: 7, opacity: 0.05, width: 0.6 },
-    { count: 6, opacity: 0.12, width: 1.0 },
-    { count: 5, opacity: 0.22, width: 1.6 }
-  ];
-  function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-    buildRails();
-  }
-  function buildRails() {
-    rails = []; dots = [];
-    LAYERS.forEach((layer, li) => {
-      for (let i = 0; i < layer.count; i++) {
-        const x = (W / (layer.count + 1)) * (i + 1) + (Math.random() - 0.5) * (W * 0.04);
-        rails.push({ x, opacity: layer.opacity, width: layer.width, layer: li });
-        const dotCount = 1 + Math.floor(Math.random() * 3);
-        for (let d = 0; d < dotCount; d++) {
-          const baseCycle = 10 + Math.random() * 16;
-          dots.push({
-            railIdx: rails.length - 1,
-            x,
-            y: Math.random() * H,
-            speed: 0.18 + Math.random() * 0.28,
-            radius: 1.5 + Math.random() * 2.5,
-            opacity: 0.25 + Math.random() * 0.55,
-            cycle: baseCycle,
-            phase: Math.random() * Math.PI * 2,
-            sineAmp: (Math.random() - 0.5) * 18,
-            layer: li
-          });
-        }
-      }
-    });
-  }
-  const FADE_ZONE = 150;
-  function getBottomFade(y) {
-    const fadeStart = H - FADE_ZONE;
-    if (y <= fadeStart) return 1.0;
-    const t = (y - fadeStart) / FADE_ZONE;
-    return 1.0 - (t * t);
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    rails.forEach(r => {
-      ctx.save();
-      const grad = ctx.createLinearGradient(r.x, 0, r.x, H);
-      const fadeStart = H - FADE_ZONE;
-      const midFade = H - FADE_ZONE * 0.5;
-      grad.addColorStop(0, `rgba(255,255,255,${r.opacity})`);
-      grad.addColorStop(fadeStart / H, `rgba(255,255,255,${r.opacity})`);
-      grad.addColorStop(midFade / H, `rgba(255,255,255,${r.opacity * 0.3})`);
-      grad.addColorStop(1, `rgba(255,255,255,0)`);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = r.width;
-      ctx.beginPath();
-      ctx.moveTo(r.x, 0);
-      ctx.lineTo(r.x, H);
-      ctx.stroke();
-      ctx.restore();
-    });
-    const t = performance.now() / 1000;
-    dots.forEach(dot => {
-      dot.y += dot.speed;
-      if (dot.y > H + dot.radius) dot.y = -dot.radius;
-      const sineOffset = Math.sin(t / dot.cycle * Math.PI * 2 + dot.phase) * dot.sineAmp;
-      const dx = dot.x + sineOffset;
-      const fade = getBottomFade(dot.y);
-      const finalOpacity = dot.opacity * fade;
-      if (finalOpacity <= 0.005) return;
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(dx, dot.y, dot.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(107,154,184,${finalOpacity})`;
-      ctx.fill();
-      ctx.restore();
-    });
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize', resize);
-  resize();
-  draw();
+const words = ['Twenty','Years','Building','the','Standards','That','Run','Federal','Health.'];
+const hl = document.getElementById('hero-headline');
+words.forEach((w,i) => {
+  const span = document.createElement('span');
+  span.className = 'word';
+  span.textContent = w;
+  span.style.transitionDelay = (0.3 + i * 0.08) + 's';
+  hl.appendChild(span);
+});
+setTimeout(() => hl.querySelectorAll('.word').forEach(s => s.classList.add('visible')), 100);
 
-  /* ── Scroll reveal ── */
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => observer.observe(el));
-})();
+document.getElementById('hero-bg').style.backgroundImage = "url('images/hero.jpg')";
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function animateCount(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); countObserver.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
 </script>
 </body>
 </html>
